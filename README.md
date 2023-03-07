@@ -4,6 +4,16 @@
 Este código que se presenta aquí corresponde a la plantilla para realizar un desarrollo basado en microservicios para las prácticas de Desarrollo Ágil, para el curso 2022-2023.
 
 
+
+### José Manuel Gamarra Espinar
+<img src='/jose.png' width='200px'>
+
+Estudiante de Informática de la Universidad de Jaén.
+* **Correo**: jmge0004@red.ujaen.es
+* **URL TRELLO**: https://trello.com/b/9ThRUDAI/prac3
+
+
+
 ## Arquitectura de la aplicación
 
 La aplicación funciona gracias a la colaboración de **tres aplicaciones distintas** (en realidad, tres servidores web implementados con [Express ↗️](https://expressjs.com/) para [Node.js ↗️](https://nodejs.org/en/)).
