@@ -13,6 +13,265 @@ Estudiante de Informática de la Universidad de Jaén.
 * **URL TRELLO**: https://trello.com/b/9ThRUDAI/prac3
 
 
+### Capturas de pantalla Fauna
+Aquí van las capturas de pantalla del home, de la base de datos y de las colecciones
+<img src='/HomeFauna.JPG' width='1200px'>
+<img src='/PagBDFauna.JPG' width='1200px'>
+<img src='/CollectionFauna.JPG' width='1200px'>
+
+### Documentos de Fauna
+A continuación se subirán los documentos de los jugadores:
+Jugador 1:
+```
+{
+  "ref": Ref(Collection("Futbol_Americano"), "359810497849065677"),
+  "ts": 1679400880580000,
+  "data": {
+    "nombre": "Joe Montana",
+    "edad": 66,
+    "fechaNacimiento": [
+      {
+        "dia": 11,
+        "mes": 6,
+        "año": 1956
+      }
+    ],
+    "equipo": "Kansas",
+    "dorsal": 19,
+    "posicion": "Quaterback",
+    "nacionalidad": "Estadounidense",
+    "altura": 188,
+    "peso": 93,
+    "apodo": "Joe Cool"
+  }
+}
+```
+Jugador 2:
+```
+{
+  "ref": Ref(Collection("Futbol_Americano"), "359810708356989132"),
+  "ts": 1679401081330000,
+  "data": {
+    "nombre": "Tom Brady",
+    "edad": 47,
+    "fechaNacimiento": [
+      {
+        "dia": 3,
+        "mes": 8,
+        "año": 1977
+      }
+    ],
+    "equipo": "Patriots",
+    "dorsal": 12,
+    "posicion": "Quaterback",
+    "nacionalidad": "Estadounidense",
+    "altura": 193,
+    "peso": 102,
+    "apodo": "GOAT"
+  }
+}
+```
+Jugador 3:
+```
+{
+  "ref": Ref(Collection("Futbol_Americano"), "359810948712628428"),
+  "ts": 1679401310550000,
+  "data": {
+    "nombre": "Damar Hamlin",
+    "edad": 24,
+    "fechaNacimiento": [
+      {
+        "dia": 24,
+        "mes": 3,
+        "año": 1998
+      }
+    ],
+    "equipo": "Bills",
+    "dorsal": 3,
+    "posicion": "Safety",
+    "nacionalidad": "Estadounidense",
+    "altura": 183,
+    "peso": 91,
+    "apodo": "Pantera"
+  }
+}
+```
+Jugador 4:
+```
+{
+  "ref": Ref(Collection("Futbol_Americano"), "359811074449473740"),
+  "ts": 1679401430460000,
+  "data": {
+    "nombre": "Jim Brown",
+    "edad": 87,
+    "fechaNacimiento": [
+      {
+        "dia": 17,
+        "mes": 2,
+        "año": 1936
+      }
+    ],
+    "equipo": "Browns",
+    "dorsal": 32,
+    "posicion": "Fullback",
+    "nacionalidad": "Estadounidense",
+    "altura": 188,
+    "peso": 105,
+    "apodo": "Vibore"
+  }
+}
+```
+Jugador 5:
+```
+{
+  "ref": Ref(Collection("Futbol_Americano"), "359811175979942093"),
+  "ts": 1679401527290000,
+  "data": {
+    "nombre": "Peyton Manning",
+    "edad": 46,
+    "fechaNacimiento": [
+      {
+        "dia": 24,
+        "mes": 3,
+        "año": 1976
+      }
+    ],
+    "equipo": "Broncos",
+    "dorsal": 18,
+    "posicion": "Quaterback",
+    "nacionalidad": "Estadounidense",
+    "altura": 196,
+    "peso": 104,
+    "apodo": "The Sheriff"
+  }
+}
+```
+Jugador 6:
+```
+{
+  "ref": Ref(Collection("Futbol_Americano"), "359811286462103756"),
+  "ts": 1679401632650000,
+  "data": {
+    "nombre": "Jerry Rice",
+    "edad": 60,
+    "fechaNacimiento": [
+      {
+        "dia": 13,
+        "mes": 10,
+        "año": 1962
+      }
+    ],
+    "equipo": "Seattle",
+    "dorsal": 5,
+    "posicion": "Running back",
+    "nacionalidad": "Estadounidense",
+    "altura": 188,
+    "peso": 93,
+    "apodo": "The Tiger"
+  }
+}
+```
+Jugador 7:
+```
+{
+  "ref": Ref(Collection("Futbol_Americano"), "359811380366278861"),
+  "ts": 1679401722210000,
+  "data": {
+    "nombre": "Barry Sanders",
+    "edad": 54,
+    "fechaNacimiento": [
+      {
+        "dia": 16,
+        "mes": 7,
+        "año": 1968
+      }
+    ],
+    "equipo": "Lions",
+    "dorsal": 20,
+    "posicion": "Running back",
+    "nacionalidad": "Estadounidense",
+    "altura": 173,
+    "peso": 91,
+    "apodo": "Barrinki"
+  }
+}
+```
+Jugador 8:
+```
+{
+  "ref": Ref(Collection("Futbol_Americano"), "359811500517359820"),
+  "ts": 1679401836790000,
+  "data": {
+    "nombre": "Walter Payton",
+    "edad": 45,
+    "fechaNacimiento": [
+      {
+        "dia": 1,
+        "mes": 11,
+        "año": 1954
+      }
+    ],
+    "equipo": "Bears",
+    "dorsal": 34,
+    "posicion": "Halfback",
+    "nacionalidad": "Estadounidense",
+    "altura": 178,
+    "peso": 91,
+    "apodo": "Pay Pay"
+  }
+}
+```
+Jugador 9:
+```
+{
+  "ref": Ref(Collection("Futbol_Americano"), "359811628075581645"),
+  "ts": 1679401958440000,
+  "data": {
+    "nombre": "Alejandro Villanueva",
+    "edad": 34,
+    "fechaNacimiento": [
+      {
+        "dia": 22,
+        "mes": 9,
+        "año": 1988
+      }
+    ],
+    "equipo": "Ravens",
+    "dorsal": 78,
+    "posicion": "Tackle",
+    "nacionalidad": "Español",
+    "altura": 206,
+    "peso": 145,
+    "apodo": "El Bicho"
+  }
+}
+```
+Jugador 10:
+```
+{
+  "ref": Ref(Collection("Futbol_Americano"), "359811742259216588"),
+  "ts": 1679402067340000,
+  "data": {
+    "nombre": "Patrick Mahomes",
+    "edad": 27,
+    "fechaNacimiento": [
+      {
+        "dia": 17,
+        "mes": 9,
+        "año": 1995
+      }
+    ],
+    "equipo": "Kansas",
+    "dorsal": 15,
+    "posicion": "Quaterback",
+    "nacionalidad": "Estadounidense",
+    "altura": 188,
+    "peso": 104,
+    "apodo": "Crazy"
+  }
+}
+```
+
 
 ## Arquitectura de la aplicación
 
