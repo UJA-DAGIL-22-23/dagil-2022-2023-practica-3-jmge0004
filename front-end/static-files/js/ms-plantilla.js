@@ -107,7 +107,6 @@ Plantilla.plantillaTablaPersonas = {}
 
 // Tags que voy a usar para sustituir los campos
 Plantilla.plantillaTags = {
-    "ID": "### ID ###",
     "NOMBRE": "### NOMBRE ###",
     "EDAD": "### EDAD ###",
     "FECHA_NACIMIENTO": "### FECHA_NACIMIENTO ###",
@@ -120,9 +119,8 @@ Plantilla.plantillaTags = {
     "APODO": "### APODO ###",
 }
 //Cabecera
-Plantilla.plantillaTablaPersonas.cabecera = `<table width="100%" class="listado-personas">
-                    <thead>
-                        <th width="10%">Id</th>
+Plantilla.plantillaTablaPersonas.cabecera = `<table id="tabla-personas" width="100%" class="listado-personas">
+                    <thead>                 
                         <th width="10%">Nombre</th>
                         <th width="20%">Edad</th>
                         <th width="20%">Fecha Nacimiento</th>
@@ -133,14 +131,19 @@ Plantilla.plantillaTablaPersonas.cabecera = `<table width="100%" class="listado-
                         <th width="15%">Altura</th>
                         <th width="15%">Peso</th>
                         <th width="15%">Apodo</th>
+                        <th width="10%"> 
+                            <select id="select-ordenamiento" onchange="if (this.value === 'NOMBRE') {Plantilla.ordena()} else {Plantilla.ordenaEq()}">
+                                <option value="NOMBRE">Nombre</option>
+                                <option value="EQUIPO">Equipo</option>
+                            </select>
+                        </th>
                     </thead>
                     <tbody>
     `;
 
 // Elemento TR que muestra los datos de una persona
 Plantilla.plantillaTablaPersonas.cuerpo = `
-    <tr title="${Plantilla.plantillaTags.ID}">
-        <td>${Plantilla.plantillaTags.ID}</td>
+    <tr>
         <td>${Plantilla.plantillaTags.NOMBRE}</td>
         <td>${Plantilla.plantillaTags.EDAD}</td>
         <td>${Plantilla.plantillaTags.FECHA_NACIMIENTO}</td>
@@ -151,9 +154,6 @@ Plantilla.plantillaTablaPersonas.cuerpo = `
         <td>${Plantilla.plantillaTags.ALTURA}</td>
         <td>${Plantilla.plantillaTags.PESO}</td>
         <td>${Plantilla.plantillaTags.APODO}</td>
-        <td>
-                   
-        </td>
     </tr>
     `;
 
@@ -166,10 +166,10 @@ Plantilla.plantillaTablaPersonas.cuerpo = `
 Plantilla.sustituyeTags = function (plantilla, persona) {
 
     return plantilla
-        .replace(new RegExp(Plantilla.plantillaTags.ID, 'g'), persona.ref['@ref'].id)
         .replace(new RegExp(Plantilla.plantillaTags.NOMBRE, 'g'), persona.data.nombre)
         .replace(new RegExp(Plantilla.plantillaTags.EDAD, 'g'), persona.data.edad)
-        .replace(new RegExp(Plantilla.plantillaTags.FECHA_NACIMIENTO, 'g'), persona.data.fechaNacimiento[0].dia + "/" + persona.data.fechaNacimiento[0].mes + "/" + persona.data.fechaNacimiento[0].año)        .replace(new RegExp(Plantilla.plantillaTags.EQUIPO, 'g'), persona.data.equipo)
+        .replace(new RegExp(Plantilla.plantillaTags.FECHA_NACIMIENTO, 'g'), persona.data.fechaNacimiento[0].dia + "/" + persona.data.fechaNacimiento[0].mes + "/" + persona.data.fechaNacimiento[0].año)
+        .replace(new RegExp(Plantilla.plantillaTags.EQUIPO, 'g'), persona.data.equipo)
         .replace(new RegExp(Plantilla.plantillaTags.DORSAL, 'g'), persona.data.dorsal)
         .replace(new RegExp(Plantilla.plantillaTags.POSICION, 'g'), persona.data.posicion)
         .replace(new RegExp(Plantilla.plantillaTags.NACIONALIDAD, 'g'), persona.data.nacionalidad)
@@ -191,7 +191,6 @@ Plantilla.plantillaTablaPersonas.actualiza = function (persona) {
 
 
 
-
 Plantilla.mostrar = function (idPersona) {
     this.recuperaUnaPersona(idPersona, this.imprimeUnaPersona);
 }
@@ -203,6 +202,61 @@ Plantilla.personaComoTabla = function (persona) {
 }
 
 
+Plantilla.ordena = function () {
+    // Obtener la tabla y la columna que deseas ordenar
+    var table = document.getElementById("tabla-personas");
+    var column = 0; // La columna "Nombre" es la primera (índice 0)
+
+    // Crear una función que compare los valores de la columna
+    function compare(a, b) {
+        if (a.cells[column].textContent < b.cells[column].textContent) {
+            return -1;
+        }
+        if (a.cells[column].textContent > b.cells[column].textContent) {
+            return 1;
+        }
+        return 0;
+    }
+
+    // Convertir las filas de la tabla en un array
+    var rows = Array.prototype.slice.call(table.rows, 1);
+
+    // Ordenar las filas usando la función de comparación
+    rows.sort(compare);
+
+    // Agregar las filas ordenadas de vuelta a la tabla
+    for (var i = 0; i < rows.length; i++) {
+        table.appendChild(rows[i]);
+    }
+};
+
+Plantilla.ordenaEq = function () {
+    // Obtener la tabla y la columna que deseas ordenar
+    var table = document.getElementById("tabla-personas");
+    var column = 3; // La columna "Equipo" es la tercer (índice 3)
+
+    // Crear una función que compare los valores de la columna
+    function compare(a, b) {
+        if (a.cells[column].textContent < b.cells[column].textContent) {
+            return -1;
+        }
+        if (a.cells[column].textContent > b.cells[column].textContent) {
+            return 1;
+        }
+        return 0;
+    }
+
+    // Convertir las filas de la tabla en un array
+    var rows = Array.prototype.slice.call(table.rows, 1);
+
+    // Ordenar las filas usando la función de comparación
+    rows.sort(compare);
+
+    // Agregar las filas ordenadas de vuelta a la tabla
+    for (var i = 0; i < rows.length; i++) {
+        table.appendChild(rows[i]);
+    }
+};
 
 
 /**
@@ -224,13 +278,14 @@ Plantilla.recupera = async function (callBackFn) {
         //throw error
     }
 
-    // Muestro todas las persoans que se han descargado
+    // Muestro todas las personas que se han descargado
     let vectorPersonas = null
     if (response) {
         vectorPersonas = await response.json()
         callBackFn(vectorPersonas.data)
     }
 }
+
 
 /**
  * Función para mostrar en pantalla todas las personas que se han recuperado de la BBDD.
@@ -243,7 +298,6 @@ Plantilla.imprimeMuchasPersonas = function (vector) {
     let msj = Plantilla.plantillaTablaPersonas.cabecera
     vector.forEach(e => msj += Plantilla.plantillaTablaPersonas.actualiza(e))
     msj += Plantilla.plantillaTablaPersonas.pie
-
     // Borro toda la info de Article y la sustituyo por la que me interesa
     Frontend.Article.actualizar("Listado de personas", msj)
 }
@@ -262,6 +316,8 @@ Plantilla.recuperaDatosAlmacenados = function () {
 Plantilla.listar = function () {
     Plantilla.recupera(Plantilla.imprimeMuchasPersonas);
 }
+
+
 
 
 
