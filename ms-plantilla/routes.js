@@ -36,6 +36,21 @@ router.get("/acercade", async (req, res) => {
 
 
 /**
+ * Devuelve todas las personas que hay en la BBDD
+ */
+router.get("/getTodas", async (req, res) => {
+    try {
+        await callbacks.getTodas(req, res)
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+router.param("idPersona", (req, res, next, id) => {
+    next();
+});
+
+/**
  * Test de conexión a la BBDD
  */
 router.get("/test_db", async (req, res) => {

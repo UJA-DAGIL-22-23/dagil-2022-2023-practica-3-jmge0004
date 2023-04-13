@@ -64,6 +64,20 @@ describe('Servidor PLANTILLA:', () => {
         );
     });
 
+      it('Devuelve un vector de tamaño 3 al consultar mediante getTodas', (done) => {
+          supertest(app)
+              .get('/getTodas')
+              .expect(200)
+              .expect('Content-Type', /json/)
+              .expect(function (res) {
+                
+                  assert(res.body.data.length === 3);
+              })
+              .end((error) => { error ? done.fail(error) : done(); }
+              );
+      });
+
+
   })
 });
 
