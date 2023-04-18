@@ -1,13 +1,13 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/hneiFYl3)
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=10405482&assignment_repo_type=AssignmentRepo)
-# *Plantilla Práctica Microservicios*: descripción de la aplicación
+# *Plantilla Práctica Microservicios*: 
 
 Este código que se presenta aquí corresponde a la plantilla para realizar un desarrollo basado en microservicios para las prácticas de Desarrollo Ágil, para el curso 2022-2023.
 
 
 
 ### José Manuel Gamarra Espinar
-<img src='/jose.png' width='200px'>
+<img src='/images/jose.png' width='200px'>
 
 Estudiante de Informática de la Universidad de Jaén.
 * **Correo**: jmge0004@red.ujaen.es
@@ -16,9 +16,9 @@ Estudiante de Informática de la Universidad de Jaén.
 
 ### Capturas de pantalla Fauna
 Aquí van las capturas de pantalla del home, de la base de datos y de las colecciones
-<img src='/HomeFauna.JPG' width='1200px'>
-<img src='/PagBDFauna.JPG' width='1200px'>
-<img src='/CollectionFauna.JPG' width='1200px'>
+<img src='/images/HomeFauna.JPG' width='1200px'>
+<img src='/images/PagBDFauna.JPG' width='1200px'>
+<img src='/images/CollectionFauna.JPG' width='1200px'>
 
 ### Documentos de Fauna
 A continuación se subirán los documentos de los jugadores:
@@ -272,6 +272,63 @@ Jugador 10:
   }
 }
 ```
+### Iteración 1
+
+Para la iteración 1 se eligen las primeras 5 historias de usuario:
+* Ver la información del autor/autora de la aplicación al pulsar en el botón “Acerca de”
+* Ver un listado solo con los nombres de todos los jugadores/equipos
+* Ver un listado solo con los nombres de todos los jugadores/equipos ordenados alfabéticamente
+* Ver un listado con todos los datos de todos los jugadores/equipos
+* Ver un listado con todos los datos de todos los jugadores/equipos ordenado por el campo del jugador/equipo que el usuario desee
+<img src='/images/Iteracion1Prac3.JPG' width='1200px'>
+<img src='/images/Iteracion1FinalPrac3.JPG' width='1200px'>
+
+#### Historia 1
+Para que salga la información del autor, bastaba únicamente con modificar el código del Acerca De.
+<img src='/images/H1Cod.jpg' width='600px'>
+<img src='/images/H1.jpg' width='600px'>
+
+#### Historia 2
+Para la historia de usuario dos que es mostrar un listado de lo que hay en la base de datos, he llamado en el index del front-end a mi función listar, que llama a mi función recuperar e imprimemuchaspersonas. Para la primera, es decir, recuperar, lo único que hace es conectar con el microservicio e imprimemuchas personas pone el contenido que se compone de cabecera y pie, lo único ya a destacar aquí es que la fecha la trato como un vector.
+
+<img src='/images/H2Cabecera.JPG' width='600px'>
+<img src='/images/HISTORIA2_pie.JPG' width='600px'>
+<img src='/images/HISTORIA2_listar.JPG' width='600px'>
+<img src='/images/H2Susti.JPG' width='600px'>
+<img src='/images/HISTORIA2_recupera.JPG' width='600px'>
+<img src='/images/HISTORIA2_INDEX.JPG' width='600px'>
+<img src='/images/HISTORIA2_imprimemuchas.JPG' width='600px'>
+<img src='/images/H2CallBackMsPlan(backend).JPG' width='600px'>
+<img src='/images/H2Listado.JPG' width='600px'>
+
+#### Historia 3
+Para listar alfabéticamente: Se usa el método sort() en el vector de personas y se pasa una función de comparación como argumento. La función de comparación compara los nombres de las personas usando el método localeCompare(), que devuelve un valor negativo, cero o positivo dependiendo de si el primer argumento es menor, igual o mayor que el segundo argumento en orden alfabético.
+
+Con esto, las personas aparecen en la tabla ordenadas alfabéticamente por su nombre.
+
+<img src='/images/HISTORIA3_ORDENARALFABETICAMENTE.JPG' width='600px'>
+<img src='/images/HISTORIA3_RESULTADO.JPG' width='600px'>
+
+#### Historia 4
+Para hacer esta historia, es simplemente ampliar la información que se tenía en la segunda historia.
+
+<img src='/images/HISTORIA2_IDENTI.JPG' width='600px'>
+<img src='/images/HISTORIA2_CABECERA.JPG' width='600px'>
+<img src='/images/HISTORIA2_pie.JPG' width='600px'>
+<img src='/images/HISTORIA2_sustiTAG.JPG' width='600px'>
+<img src='/images/HISTORIA2_recupera.JPG' width='600px'>
+<img src='/images/HISTORIA2_listar.JPG' width='600px'>
+<img src='/images/HISTORIA2_imprimemuchas.JPG' width='600px'>
+<img src='/images/H2CallBackMsPlan(backend).JPG' width='600px'>
+<img src='/images/HISTORIA2_RESULTADO.JPG' width='800px'>
+
+#### Historia 5
+Se añade funciones de comparacion con el identificador de la tabla y finalmente se hace un select con las dos opciones para que elija si quiere ordenar por nombre o por equipo.
+
+<img src='/images/H5Cod.JPG' width='600px'>
+<img src='/images/H5Ordena.JPG' width='600px'>
+<img src='/images/H5OrdenaEq.JPG' width='600px'>
+<img src='/images/H5Nombre.JPG' width='800px'>
 
 
 ## Arquitectura de la aplicación
