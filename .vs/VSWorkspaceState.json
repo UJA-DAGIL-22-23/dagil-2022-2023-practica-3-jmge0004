@@ -3,12 +3,12 @@
     "",
     "\\api-gateway",
     "\\front-end",
+    "\\front-end\\spec",
     "\\front-end\\static-files",
     "\\front-end\\static-files\\js",
     "\\ms-plantilla",
     "\\ms-plantilla\\spec",
     "\\ms-plantilla\\spec\\support"
   ],
-  "SelectedNode": "\\api-gateway\\server.js",
   "PreviewInSolutionExplorer": false
 }

@@ -11,7 +11,7 @@ const assert = require('assert')
 const app = require('../server');
 
 /**
- * Test para las rutas "estáticas": / y /acerdade
+ * Test para las rutas "estáticas": / y /acerdade y para la del listado
  */
 describe('Servidor FRONT-END:', () => {
   describe('Cualquier ruta devuelve index.html', () => {

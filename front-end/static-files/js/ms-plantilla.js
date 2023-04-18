@@ -153,7 +153,8 @@ Plantilla.plantillaTablaPersonas.cuerpo = `
         <td>${Plantilla.plantillaTags.NACIONALIDAD}</td>
         <td>${Plantilla.plantillaTags.ALTURA}</td>
         <td>${Plantilla.plantillaTags.PESO}</td>
-        <td>${Plantilla.plantillaTags.APODO}</td>
+        <td>${Plantilla.plantillaTags.APODO}</td> 
+
     </tr>
     `;
 
@@ -191,16 +192,6 @@ Plantilla.plantillaTablaPersonas.actualiza = function (persona) {
 
 
 
-Plantilla.mostrar = function (idPersona) {
-    this.recuperaUnaPersona(idPersona, this.imprimeUnaPersona);
-}
-
-Plantilla.personaComoTabla = function (persona) {
-    return Plantilla.plantillaTablaPersonas.cabecera
-        + Plantilla.plantillaTablaPersonas.actualiza(persona)
-        + Plantilla.plantillaTablaPersonas.pie;
-}
-
 
 Plantilla.ordena = function () {
     // Obtener la tabla y la columna que deseas ordenar
@@ -237,10 +228,10 @@ Plantilla.ordenaEq = function () {
 
     // Crear una función que compare los valores de la columna
     function compare(a, b) {
-        if (a.cells[column].textContent < b.cells[column].textContent) {
+        if (a.cells[column] && b.cells[column] && a.cells[column].textContent < b.cells[column].textContent) {
             return -1;
         }
-        if (a.cells[column].textContent > b.cells[column].textContent) {
+        if (a.cells[column] && b.cells[column] && a.cells[column].textContent > b.cells[column].textContent) {
             return 1;
         }
         return 0;
@@ -302,16 +293,6 @@ Plantilla.imprimeMuchasPersonas = function (vector) {
     Frontend.Article.actualizar("Listado de personas", msj)
 }
 
-
-Plantilla.personaMostrada=null
-
-Plantilla.almacenaDatos = function (persona) {
-    Plantilla.personaMostrada = persona;
-}
-
-Plantilla.recuperaDatosAlmacenados = function () {
-    return this.personaMostrada;
-}
 
 Plantilla.listar = function () {
     Plantilla.recupera(Plantilla.imprimeMuchasPersonas);
