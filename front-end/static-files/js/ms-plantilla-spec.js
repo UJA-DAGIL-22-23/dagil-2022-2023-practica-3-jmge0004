@@ -162,7 +162,8 @@ describe("Plantilla.plantillaTags: ", function () {
 describe("Plantilla.plantillaTablaPersonas.cabecera", function () {
     it("Comprobación para ver si se tiene la propiedad cabecera de plantillaTablaPersonas configurada correctamente", function () {
         var cabeceraEsperada = `<table id="tabla-personas" width="100%" class="listado-personas">
-                    <thead>                 
+                    <thead>
+                        <th width="10%">ID</th>
                         <th width="10%">Nombre</th>
                         <th width="20%">Edad</th>
                         <th width="20%">Fecha Nacimiento</th>
@@ -204,9 +205,10 @@ describe("Plantilla.plantillaTablaPersonas.pie", function () {
     });
 });
 
-//Plantilla.plantillaTablaPersonas.actualiza
-describe('Plantilla.plantillaTablaPersonas.actualiza', function () {
-    let jugador = {
+//Plantilla.plantillaTablaPersonas.actualiza y el sustituyeTag
+describe("Plantilla.plantillaTablaPersonas.sustituyeTags", function () {
+    const persona = {
+        ref: { '@ref': { id: '359810708356989100' } },
         data: {
             nombre: 'Tom Brady',
             edad: 44,
@@ -220,61 +222,132 @@ describe('Plantilla.plantillaTablaPersonas.actualiza', function () {
             apodo: 'Tom Terrific'
         }
     };
-
-    it('Comprobacion de si actualiza la plantilla con los datos del jugador', function () {
-        let plantillaActualizada = Plantilla.plantillaTablaPersonas.actualiza(jugador);
-        expect(plantillaActualizada).toContain(jugador.data.nombre);
-        expect(plantillaActualizada).toContain(jugador.data.edad);
-        expect(plantillaActualizada).toContain(`${jugador.data.fechaNacimiento[0].dia}/${jugador.data.fechaNacimiento[0].mes}/${jugador.data.fechaNacimiento[0].año}`);
-        expect(plantillaActualizada).toContain(jugador.data.equipo);
-        expect(plantillaActualizada).toContain(jugador.data.dorsal);
-        expect(plantillaActualizada).toContain(jugador.data.posicion);
-        expect(plantillaActualizada).toContain(jugador.data.nacionalidad);
-        expect(plantillaActualizada).toContain(jugador.data.altura);
-        expect(plantillaActualizada).toContain(jugador.data.peso);
-        expect(plantillaActualizada).toContain(jugador.data.apodo);
+    const plantilla = `
+    <tr>
+      <td>### ID ###</td>
+      <td>### NOMBRE ###</td>
+      <td>### EDAD ###</td>
+      <td>### FECHA_NACIMIENTO ###</td>
+      <td>### EQUIPO ###</td>
+      <td>### DORSAL ###</td>
+      <td>### POSICION ###</td>
+      <td>### NACIONALIDAD ###</td>
+      <td>### ALTURA ###</td>
+      <td>### PESO ###</td>
+      <td>### APODO ###</td>
+      <td>
+        <div><a href="javascript:Plantilla.mostrar('### ID ###')" class="opcion-secundaria mostrar">Info</a></div>
+      </td>
+    </tr>
+    `;
+    function escapeRegExp(str) {
+        return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& significa el texto coincidente
+    }
+    it("La plantilla sustituye correctamente los tags", function () {
+        const resultado = Plantilla.sustituyeTags(plantilla, persona);
+        const expected = `
+    <tr>
+      <td>359810708356989100</td>
+      <td>Tom Brady</td>
+      <td>44</td>
+      <td>3/8/1977</td>
+      <td>Tampa Bay Buccaneers</td>
+      <td>12</td>
+      <td>Quarterback</td>
+      <td>Estados Unidos</td>
+      <td>1.93 m</td>
+      <td>102 kg</td>
+      <td>Tom Terrific</td>
+      <td>
+        <div><a href="javascript:Plantilla.mostrar('359810708356989100')" class="opcion-secundaria mostrar">Info</a></div>
+      </td>
+    </tr>
+  `;
+        const escapedExpected = escapeRegExp(expected);
+        expect(resultado).toMatch(new RegExp(escapedExpected));
     });
 });
 
 //Plantilla.ordena
-describe("Plantilla", function () {
-    describe("Funcion ordena()", function () {
-        beforeEach(function () {
-            // Crear una tabla con filas desordenadas
-            var tabla = document.createElement("table");
-            tabla.setAttribute("id", "tabla-personas");
-            tabla.innerHTML = `
-                <tr>
-                  <td>María</td>
-                </tr>
-                <tr>
-                  <td>Pedro</td>
-                </tr>
-                <tr>
-                  <td>Lucía</td>
-                </tr>
-              `;
-            document.body.appendChild(tabla);
-        });
+describe("Prueba de ordenamiento de tabla", function () {
+    var table;
 
-        afterEach(function () {
-            // Remover la tabla creada durante el beforeEach
-            var tabla = document.getElementById("tabla-personas");
-                document.body.removeChild(tabla);
-        });
+    beforeEach(function () {
+        // Crea una tabla de ejemplo
+        table = document.createElement("table");
+        table.setAttribute("id", "tabla-personas");
 
-        it("debe ordenar la tabla por el nombre", function () {
-            // Ordenar la tabla por la columna "Nombre"
-            Plantilla.ordena();
+        var thead = document.createElement("thead");
+        var tr = document.createElement("tr");
+        var th1 = document.createElement("th");
+        th1.appendChild(document.createTextNode("ID"));
+        var th2 = document.createElement("th");
+        th2.appendChild(document.createTextNode("Nombre"));
+        var th3 = document.createElement("th");
+        th3.appendChild(document.createTextNode("Edad"));
+        tr.appendChild(th1);
+        tr.appendChild(th2);
+        tr.appendChild(th3);
+        thead.appendChild(tr);
+        table.appendChild(thead);
 
-            // Obtener las celdas de la tabla ordenada
-            var celdas = document.querySelectorAll("#tabla-personas td:first-child");
+        var tbody = document.createElement("tbody");
+        var tr1 = document.createElement("tr");
+        var td11 = document.createElement("td");
+        td11.appendChild(document.createTextNode("1"));
+        var td12 = document.createElement("td");
+        td12.appendChild(document.createTextNode("María"));
+        var td13 = document.createElement("td");
+        td13.appendChild(document.createTextNode("30"));
+        tr1.appendChild(td11);
+        tr1.appendChild(td12);
+        tr1.appendChild(td13);
+        tbody.appendChild(tr1);
 
-            // Comprobar que las celdas están en el orden esperado
-            expect(celdas[1].textContent).toEqual("Lucía");
-            expect(celdas[0].textContent).toEqual("María");
-            expect(celdas[2].textContent).toEqual("Pedro");
-        });
+        var tr2 = document.createElement("tr");
+        var td21 = document.createElement("td");
+        td21.appendChild(document.createTextNode("2"));
+        var td22 = document.createElement("td");
+        td22.appendChild(document.createTextNode("Pedro"));
+        var td23 = document.createElement("td");
+        td23.appendChild(document.createTextNode("25"));
+        tr2.appendChild(td21);
+        tr2.appendChild(td22);
+        tr2.appendChild(td23);
+        tbody.appendChild(tr2);
+
+        var tr3 = document.createElement("tr");
+        var td31 = document.createElement("td");
+        td31.appendChild(document.createTextNode("3"));
+        var td32 = document.createElement("td");
+        td32.appendChild(document.createTextNode("Lucía"));
+        var td33 = document.createElement("td");
+        td33.appendChild(document.createTextNode("35"));
+        tr3.appendChild(td31);
+        tr3.appendChild(td32);
+        tr3.appendChild(td33);
+        tbody.appendChild(tr3);
+
+        table.appendChild(tbody);
+
+        // Agrega la tabla al documento
+        document.body.appendChild(table);
+    });
+
+    afterEach(function () {
+        // Remueve la tabla del documento
+        document.body.removeChild(table);
+    });
+
+    it("Comprobacion para ordenar la tabla ascendentemente por el nombre", function () {
+        Plantilla.ordena();
+
+        var rows = table.rows;
+
+        // La primera fila es la fila de encabezados
+        expect(rows[1].cells[1].textContent).toEqual("Lucía");
+        expect(rows[2].cells[1].textContent).toEqual("María");
+        expect(rows[3].cells[1].textContent).toEqual("Pedro");
     });
 });
 
@@ -343,7 +416,7 @@ describe("Plantilla.listar", function () {
         spyRecupera = spyOn(Plantilla, "recupera");
     });
 
-    it("debe llamar a Plantilla.recupera y Plantilla.imprimeMuchasPersonas", function () {
+    it("Debe llamar a Plantilla.recupera", function () {
         Plantilla.listar();
 
         expect(spyRecupera).toHaveBeenCalled();

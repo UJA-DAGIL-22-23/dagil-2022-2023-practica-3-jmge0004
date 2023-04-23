@@ -107,6 +107,7 @@ Plantilla.plantillaTablaPersonas = {}
 
 // Tags que voy a usar para sustituir los campos
 Plantilla.plantillaTags = {
+    "ID": "### ID ###",
     "NOMBRE": "### NOMBRE ###",
     "EDAD": "### EDAD ###",
     "FECHA_NACIMIENTO": "### FECHA_NACIMIENTO ###",
@@ -120,7 +121,8 @@ Plantilla.plantillaTags = {
 }
 //Cabecera
 Plantilla.plantillaTablaPersonas.cabecera = `<table id="tabla-personas" width="100%" class="listado-personas">
-                    <thead>                 
+                    <thead>
+                        <th width="10%">ID</th>
                         <th width="10%">Nombre</th>
                         <th width="20%">Edad</th>
                         <th width="20%">Fecha Nacimiento</th>
@@ -144,6 +146,7 @@ Plantilla.plantillaTablaPersonas.cabecera = `<table id="tabla-personas" width="1
 // Elemento TR que muestra los datos de una persona
 Plantilla.plantillaTablaPersonas.cuerpo = `
     <tr>
+        <td>${Plantilla.plantillaTags.ID}</td>
         <td>${Plantilla.plantillaTags.NOMBRE}</td>
         <td>${Plantilla.plantillaTags.EDAD}</td>
         <td>${Plantilla.plantillaTags.FECHA_NACIMIENTO}</td>
@@ -154,7 +157,9 @@ Plantilla.plantillaTablaPersonas.cuerpo = `
         <td>${Plantilla.plantillaTags.ALTURA}</td>
         <td>${Plantilla.plantillaTags.PESO}</td>
         <td>${Plantilla.plantillaTags.APODO}</td> 
-
+        <td>
+            <div><a href="javascript:Plantilla.mostrar('${Plantilla.plantillaTags.ID}')" class="opcion-secundaria mostrar">Info</a></div>
+        </td>
     </tr>
     `;
 
@@ -167,16 +172,17 @@ Plantilla.plantillaTablaPersonas.cuerpo = `
 Plantilla.sustituyeTags = function (plantilla, persona) {
 
     return plantilla
-        .replace(new RegExp(Plantilla.plantillaTags.NOMBRE, 'g'), persona.data.nombre)
-        .replace(new RegExp(Plantilla.plantillaTags.EDAD, 'g'), persona.data.edad)
-        .replace(new RegExp(Plantilla.plantillaTags.FECHA_NACIMIENTO, 'g'), persona.data.fechaNacimiento[0].dia + "/" + persona.data.fechaNacimiento[0].mes + "/" + persona.data.fechaNacimiento[0].año)
-        .replace(new RegExp(Plantilla.plantillaTags.EQUIPO, 'g'), persona.data.equipo)
-        .replace(new RegExp(Plantilla.plantillaTags.DORSAL, 'g'), persona.data.dorsal)
-        .replace(new RegExp(Plantilla.plantillaTags.POSICION, 'g'), persona.data.posicion)
-        .replace(new RegExp(Plantilla.plantillaTags.NACIONALIDAD, 'g'), persona.data.nacionalidad)
-        .replace(new RegExp(Plantilla.plantillaTags.ALTURA, 'g'), persona.data.altura)
-        .replace(new RegExp(Plantilla.plantillaTags.PESO, 'g'), persona.data.peso)
-        .replace(new RegExp(Plantilla.plantillaTags.APODO, 'g'), persona.data.apodo)
+        .replace(new RegExp(Plantilla.plantillaTags.ID, 'g'), persona.ref['@ref'].id)
+        .replace(new RegExp(Plantilla.plantillaTags.NOMBRE, 'g'), persona.data?.nombre)
+        .replace(new RegExp(Plantilla.plantillaTags.EDAD, 'g'), persona.data?.edad)
+        .replace(new RegExp(Plantilla.plantillaTags.FECHA_NACIMIENTO, 'g'), persona.data?.fechaNacimiento[0].dia + "/" + persona.data?.fechaNacimiento[0].mes + "/" + persona.data?.fechaNacimiento[0].año)
+        .replace(new RegExp(Plantilla.plantillaTags.EQUIPO, 'g'), persona.data?.equipo)
+        .replace(new RegExp(Plantilla.plantillaTags.DORSAL, 'g'), persona.data?.dorsal)
+        .replace(new RegExp(Plantilla.plantillaTags.POSICION, 'g'), persona.data?.posicion)
+        .replace(new RegExp(Plantilla.plantillaTags.NACIONALIDAD, 'g'), persona.data?.nacionalidad)
+        .replace(new RegExp(Plantilla.plantillaTags.ALTURA, 'g'), persona.data?.altura)
+        .replace(new RegExp(Plantilla.plantillaTags.PESO, 'g'), persona.data?.peso)
+        .replace(new RegExp(Plantilla.plantillaTags.APODO, 'g'), persona.data?.apodo)
 }
 
 // Pie de la tabla
@@ -196,14 +202,16 @@ Plantilla.plantillaTablaPersonas.actualiza = function (persona) {
 Plantilla.ordena = function () {
     // Obtener la tabla y la columna que deseas ordenar
     var table = document.getElementById("tabla-personas");
-    var column = 0; // La columna "Nombre" es la primera (índice 0)
+    var column = 1; // La columna "Nombre" es la segunda (índice 1)
 
     // Crear una función que compare los valores de la columna
     function compare(a, b) {
-        if (a.cells[column].textContent < b.cells[column].textContent) {
+        var cellA = a.cells[column] ? a.cells[column].textContent : '';
+        var cellB = b.cells[column] ? b.cells[column].textContent : '';
+        if (cellA < cellB) {
             return -1;
         }
-        if (a.cells[column].textContent > b.cells[column].textContent) {
+        if (cellA > cellB) {
             return 1;
         }
         return 0;
@@ -224,7 +232,7 @@ Plantilla.ordena = function () {
 Plantilla.ordenaEq = function () {
     // Obtener la tabla y la columna que deseas ordenar
     var table = document.getElementById("tabla-personas");
-    var column = 3; // La columna "Equipo" es la tercer (índice 3)
+    var column = 4; // La columna "Equipo" es la tercer (índice 3)
 
     // Crear una función que compare los valores de la columna
     function compare(a, b) {
@@ -299,6 +307,64 @@ Plantilla.listar = function () {
 }
 
 
+
+/// Objeto para almacenar los datos de la persona que se está mostrando
+Plantilla.personaMostrada = null
+
+/**
+ * Imprime los datos de una persona como una tabla usando la plantilla del formulario.
+ * @param {persona} Plantilla Objeto con los datos de la persona
+ * @returns Una cadena con la tabla que tiene ya los datos actualizados
+ */
+Plantilla.personaComoTabla = function (persona) {
+    return Plantilla.plantillaTablaPersonas.cabecera
+        + Plantilla.plantillaTablaPersonas.actualiza(persona)
+        + Plantilla.plantillaTablaPersonas.pie;
+}
+
+/**
+ * Función para mostrar en pantalla los detalles de una persona que se ha recuperado de la BBDD por su id
+ * @param {Persona} persona Datos de la persona a mostrar
+ */
+
+Plantilla.imprimeUnaPersona = function (persona) {
+
+   // let msj = Plantilla.personaComoTabla(persona);
+    let msj = Plantilla.plantillaTablaPersonas.cabecera
+    msj += Plantilla.plantillaTablaPersonas.actualiza(persona)
+    msj += Plantilla.plantillaTablaPersonas.pie
+    
+    // Borro toda la info de Article y la sustituyo por la que me interesa
+    Frontend.Article.actualizar("Mostrar una persona", msj)
+
+    // Actualiza el objeto que guarda los datos mostrados
+    Plantilla.almacenaDatos(persona)
+}
+
+
+Plantilla.almacenaDatos = function (persona) {
+    Plantilla.personaMostrada = persona;
+}
+
+
+Plantilla.recuperaUnaPersona = async function (idPersona, callBackFn) {
+    try {
+        const url = Frontend.API_GATEWAY + "/plantilla/getPorId/" + idPersona
+        const response = await fetch(url);
+        if (response) {
+            const persona = await response.json()
+            callBackFn(persona)
+        }
+    } catch (error) {
+        alert("Error: No se han podido acceder al API Gateway")
+        console.error(error)
+    }
+}
+
+
+Plantilla.mostrar = function (idPersona) {
+    this.recuperaUnaPersona(idPersona, this.imprimeUnaPersona);
+}
 
 
 
