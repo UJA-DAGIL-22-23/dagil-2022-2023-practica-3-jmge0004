@@ -18,7 +18,6 @@ const client = new faunadb.Client({
 });
 
 const COLLECTION = "Futbol_Americano"
-
 // CALLBACKS DEL MODELO
 
 /**
@@ -99,6 +98,48 @@ const CB_MODEL_SELECTS = {
             CORS(res).status(500).json({ error: error.description })
         }
     },
+
+    setTodo: async (req, res) => {
+        //console.log("setTodo req.body", req) // req.body contiene todos los parámetros de la llamada
+        try {
+            let valorDevuelto = {}
+            // Hay que comprobar Object.keys(req.body).length para saber si req.body es objeto "normal" o con problemas
+            // Cuando la llamada viene de un formulario, se crea una sola entrada, con toda la info en una sola key y el value está vacío.
+            // Cuando la llamada se hace con un objeto (como se hace desde el server-spec.js), el value No está vacío.
+            let data = (Object.values(req.body)[0] === '') ? JSON.parse(Object.keys(req.body)[0]) : req.body
+            //console.log("SETTODO data es", data)
+            let persona = await client.query(
+                q.Update(
+                    q.Ref(q.Collection(COLLECTION), data.id_persona),
+                    {
+                        data: {
+                            nombre: data.nombre_persona,
+                            edad: data.edad_persona,
+                            fecha: data.fecha_persona,
+                            dorsal: data.dorsal_persona,
+                            posicion: data.posicion_persona,
+                            nacionalidad: data.nacionalidad_persona,
+                            altura: data.altura_persona,
+                            peso: data.peso_persona,
+                            apodo: data.apodo_persona,
+                        },
+                    },
+                )
+            )
+                .then((ret) => {
+                    valorDevuelto = ret
+                    //console.log("Valor devuelto ", valorDevuelto)
+                    CORS(res)
+                        .status(200)
+                        .header('Content-Type', 'application/json')
+                        .json(valorDevuelto)
+                })
+
+        } catch (error) {
+            CORS(res).status(500).json({ error: error.description })
+        }
+    },
+
 }
 
 

@@ -62,7 +62,13 @@ router.get("/getPorId/:idPersona", async (req, res) => {
     }
 });
 
-
+router.post("/setTodo", async (req, res) => {
+    try {
+        await callbacks.setTodo(req, res)
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 
 /**

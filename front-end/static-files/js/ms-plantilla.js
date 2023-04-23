@@ -93,14 +93,20 @@ Plantilla.mostrarAcercaDe = function (datosDescargados) {
 }
 
 
+Plantilla.form = {
+    NOMBRE: "form-persona-nombre",
+    EDAD: "form-persona-edad",
+    FECHA_NACIMIENTO: "form-persona-fecha",
+    DORSAL: "form-persona-dorsal",
+    POSICION: "form-persona-posicion",
+    NACIONALIDAD: "form-persona-nacionalidad",
+    ALTURA: "form-persona-altura",
+    PESO: "form-persona-peso",
+    APODO: "form-persona-apodo",
+}
 
 
-
-
-
-
-
-
+Plantilla.plantillaFormularioPersona = {}
 
 
 Plantilla.plantillaTablaPersonas = {}
@@ -163,6 +169,33 @@ Plantilla.plantillaTablaPersonas.cuerpo = `
     </tr>
     `;
 
+
+
+
+
+
+Plantilla.plantillaTablaPersonas.cuerpo2 = `
+    <tr>
+        <td>${Plantilla.plantillaTags.ID}</td>
+        <td>${Plantilla.plantillaTags.NOMBRE}</td>
+        <td>${Plantilla.plantillaTags.EDAD}</td>
+        <td>${Plantilla.plantillaTags.FECHA_NACIMIENTO}</td>
+        <td>${Plantilla.plantillaTags.EQUIPO}</td>
+        <td>${Plantilla.plantillaTags.DORSAL}</td>
+        <td>${Plantilla.plantillaTags.POSICION}</td>
+        <td>${Plantilla.plantillaTags.NACIONALIDAD}</td>
+        <td>${Plantilla.plantillaTags.ALTURA}</td>
+        <td>${Plantilla.plantillaTags.PESO}</td>
+        <td>${Plantilla.plantillaTags.APODO}</td> 
+        <td>
+            <div><a href="javascript:Plantilla.listar('${Plantilla.listar}')" class="opcion-secundaria mostrar">Volver</a></div>
+
+        </td>
+    </tr>
+    `;
+
+
+
 /**
  * Actualiza el cuerpo de la plantilla deseada con los datos de la persona que se le pasa
  * @param {String} Plantilla Cadena conteniendo HTML en la que se desea cambiar lso campos de la plantilla por datos
@@ -195,6 +228,9 @@ Plantilla.plantillaTablaPersonas.actualiza = function (persona) {
     return Plantilla.sustituyeTags(this.cuerpo, persona)
 }
 
+Plantilla.plantillaTablaPersonas.actualiza2 = function (persona) {
+    return Plantilla.sustituyeTags(this.cuerpo2, persona)
+}
 
 
 
@@ -330,10 +366,10 @@ Plantilla.personaComoTabla = function (persona) {
 Plantilla.imprimeUnaPersona = function (persona) {
 
    // let msj = Plantilla.personaComoTabla(persona);
-    let msj = Plantilla.plantillaTablaPersonas.cabecera
-    msj += Plantilla.plantillaTablaPersonas.actualiza(persona)
-    msj += Plantilla.plantillaTablaPersonas.pie
-    
+    // let msj = Plantilla.plantillaTablaPersonas.cabecera
+    // msj += Plantilla.plantillaTablaPersonas.actualiza2(persona)
+    // msj += Plantilla.plantillaTablaPersonas.pie
+    let msj = Plantilla.personaComoFormulario(persona);
     // Borro toda la info de Article y la sustituyo por la que me interesa
     Frontend.Article.actualizar("Mostrar una persona", msj)
 
@@ -345,6 +381,7 @@ Plantilla.imprimeUnaPersona = function (persona) {
 Plantilla.almacenaDatos = function (persona) {
     Plantilla.personaMostrada = persona;
 }
+
 
 
 Plantilla.recuperaUnaPersona = async function (idPersona, callBackFn) {
@@ -368,6 +405,7 @@ Plantilla.mostrar = function (idPersona) {
 
 
 
+
 /**
  * Función principal para responder al evento de elegir la opción "Home"
  */
@@ -383,3 +421,163 @@ Plantilla.procesarAcercaDe = function () {
 }
 
 
+Plantilla.plantillaFormularioPersona.formulario = `
+<form method='post' action=''>
+    <table width="100%" class="listado-personas">
+        <thead>
+            <th width="10%">Id</th><th width="20%">Nombre</th><th width="20%">Edad</th><th width="10%">Dorsal</th><th width="10%">Posicion</th><th width="10%">Nacionalidad</th><th width="10%">Altura</th><th width="10%">Peso</th><th width="10%">Apodo</th>
+        </thead>
+        <tbody>
+            <tr title="${Plantilla.plantillaTags.ID}">
+                <td><input type="text" class="form-persona-elemento" disabled id="form-persona-id"
+                        value="${Plantilla.plantillaTags.ID}"
+                        name="id_persona"/></td>
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-persona-nombre" required value="${Plantilla.plantillaTags.NOMBRE}"
+                        name="nombre_persona"/></td>
+                <td><input type="number" class="form-persona-elemento editable" disabled
+                        id="form-persona-edad" value="${Plantilla.plantillaTags.EDAD}"
+                        name="edad_persona"/></td>
+              
+                 <td><input type="number" class="form-persona-elemento editable" disabled
+                        id="form-persona-dorsal" required value="${Plantilla.plantillaTags.DORSAL}"
+                        name="dorsal_persona"/></td>
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-persona-posicion" required value="${Plantilla.plantillaTags.POSICION}"
+                        name="posicion_persona"/></td>
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-persona-nacionalidad" required value="${Plantilla.plantillaTags.NACIONALIDAD}"
+                        name="nacionalidad_persona"/></td>
+                <td><input type="number" class="form-persona-elemento editable" disabled
+                        id="form-persona-altura" required value="${Plantilla.plantillaTags.ALTURA}"
+                        name="altura_persona"/></td>
+                <td><input type="number" class="form-persona-elemento editable" disabled
+                        id="form-persona-peso" required value="${Plantilla.plantillaTags.PESO}"
+                        name="peso_persona"/></td>
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-persona-apodo" required value="${Plantilla.plantillaTags.APODO}"
+                        name="apodo_persona"/></td>
+
+                    <div><a href="javascript:Plantilla.editar()" class="opcion-secundaria mostrar">Editar</a></div>
+                    <div><a href="javascript:Plantilla.guardar()" class="opcion-terciaria editar ocultar">Guardar</a></div>
+                    <div><a href="javascript:Plantilla.cancelar()" class="opcion-terciaria editar ocultar">Cancelar</a></div>
+                    <div><a href="javascript:Plantilla.listar('${Plantilla.listar}')" class="opcion-secundaria mostrar">Volver</a></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+`;
+
+Plantilla.editar = function () {
+    this.ocultarOpcionesSecundarias()
+    this.mostrarOcionesTerciariasEditar()
+    this.habilitarCamposEditables()
+}
+Plantilla.ocultarOpcionesSecundarias = function () {
+    this.opcionesMostrarOcultar("opcion-secundaria", false)
+    return this
+}
+Plantilla.opcionesMostrarOcultar = function (classname, mostrando) {
+    let opciones = document.getElementsByClassName(classname)
+    let claseQuitar = mostrando ? Frontend.CLASS_OCULTAR : Frontend.CLASS_MOSTRAR
+    let claseAniadir = !mostrando ? Frontend.CLASS_OCULTAR : Frontend.CLASS_MOSTRAR
+
+    for (let i = 0; i < opciones.length; ++i) {
+        Frontend.quitarClase(opciones[i], claseQuitar)
+            .aniadirClase(opciones[i], claseAniadir)
+    }
+    return this
+}
+Plantilla.mostrarOcionesTerciariasEditar = function () {
+    this.opcionesMostrarOcultar("opcion-terciaria editar", true)
+    return this
+}
+Plantilla.habilitarCamposEditables = function () {
+    Plantilla.habilitarDeshabilitarCamposEditables(false)
+    return this
+}
+Plantilla.habilitarDeshabilitarCamposEditables = function (deshabilitando) {
+    deshabilitando = (typeof deshabilitando === "undefined" || deshabilitando === null) ? true : deshabilitando
+    for (let campo in Plantilla.form) {
+        document.getElementById(Plantilla.form[campo]).disabled = deshabilitando
+    }
+    return this
+}
+
+Plantilla.cancelar = function () {
+    this.imprimeUnaPersona(this.recuperaDatosAlmacenados())
+    this.deshabilitarCamposEditables()
+    this.ocultarOcionesTerciariasEditar()
+    this.mostrarOpcionesSecundarias()
+}
+
+Plantilla.deshabilitarCamposEditables = function () {
+    Plantilla.habilitarDeshabilitarCamposEditables(true)
+    return this
+}
+Plantilla.ocultarOcionesTerciariasEditar = function () {
+    this.opcionesMostrarOcultar("opcion-terciaria editar", false)
+    return this
+}
+Plantilla.mostrarOpcionesSecundarias = function () {
+    this.opcionesMostrarOcultar("opcion-secundaria", true)
+    return this
+}
+
+
+Plantilla.plantillaFormularioPersona.actualiza = function (persona) {
+    return Plantilla.sustituyeTags(this.formulario, persona)
+}
+
+Plantilla.personaComoFormulario = function (persona) {
+    return Plantilla.plantillaFormularioPersona.actualiza(persona);
+}
+
+
+
+
+
+
+
+
+Plantilla.guardar = async function () {
+    try {
+        let url = Frontend.API_GATEWAY + "/plantilla/setTodo/"
+        let id_persona = document.getElementById("form-persona-id").value
+        const response = await fetch(url, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'no-cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'omit', // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrer: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify({
+                "id_persona": id_persona,
+                "nombre_persona": document.getElementById("form-persona-nombre").value,
+                "edad_persona": document.getElementById("form-persona-edad").value,
+                "fecha_persona": document.getElementById("form-persona-fecha").value,
+                "dorsal_persona": document.getElementById("form-persona-dorsal").value,
+                "posicion_persona": document.getElementById("form-persona-posicion").value,
+                "nacionalidad_persona": document.getElementById("form-persona-nacionalidad").value,
+                "altura_persona": document.getElementById("form-persona-altura").value,
+                "peso_persona": document.getElementById("form-persona-peso").value,
+                "apodo_persona": document.getElementById("form-persona-apodo").value,      
+            }), // body data type must match "Content-Type" header
+        })
+        /*
+        Error: No procesa bien la respuesta devuelta
+        if (response) {
+            const persona = await response.json()
+            alert(persona)
+        }
+        */
+        Plantilla.mostrar(id_persona)
+    } catch (error) {
+        alert("Error: No se han podido acceder al API Gateway " + error)
+        //console.error(error)
+    }
+}
