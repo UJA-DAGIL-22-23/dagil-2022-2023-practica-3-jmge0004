@@ -330,6 +330,9 @@ Se añade funciones de comparacion con el identificador de la tabla y finalmente
 <img src='/images/H5OrdenaEq.JPG' width='600px'>
 <img src='/images/H5Nombre.JPG' width='800px'>
 
+#### INCREMENTO 1
+https://github.com/UJA-DAGIL-22-23/dagil-2022-2023-practica-3-jmge0004/releases/tag/It1_17-04-2023
+
 ### Iteración 2
 
 Para la iteración 2 se eligen las siguientes historias de usuario:
@@ -399,7 +402,8 @@ Para la siguiente historia, el cambio es mínimo dado que son varios campos a la
 <img src='/images/H14_15Mostrar.JPG' width='600px'>
 <img src='/images/H14_15Resultado2.JPG' width='800px'>
 
-
+#### INCREMENTO 2
+https://github.com/UJA-DAGIL-22-23/dagil-2022-2023-practica-3-jmge0004/releases/tag/It2_23-04-2023
 
 # Explicacion funcional de la practica
 ## Arquitectura de la aplicación
