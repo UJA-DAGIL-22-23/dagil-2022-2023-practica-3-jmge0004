@@ -77,6 +77,42 @@ describe('Servidor PLANTILLA:', () => {
               );
       });
 
+      it('Devuelve carlos@hotmail.com al recuperar los datos de la Persona con id 354047338258366678 mediante getPorId', (done) => {
+          supertest(app)
+              .get('/getPorId/354047338258366678')
+              .expect(200)
+              .expect('Content-Type', /json/)
+              .expect(function (res) {
+                  //console.log( res.body ); // Para comprobar qué contiene exactamente res.body
+                  assert(res.body.data.hasOwnProperty('email'));
+                  assert(res.body.data.email === "ana.alvarez@gmail.com");
+              })
+              .end((error) => { error ? done.fail(error) : done(); }
+              );
+      });
+
+      it('Devuelve CORREO@CAMBIADO.COM al recuperar los datos de la Persona con id 354047536357441750 mediante setTodo', (done) => {
+          const CORREO_TEST = 'correo@correo.cambiado.com'
+          const persona = {
+              id_persona: '354047536357441750',
+              nombre_persona: 'Nombre cambiado',
+              apellidos_persona: 'Apellidos cambiados',
+              email_persona: CORREO_TEST,
+              año_entrada_persona: 1999
+          };
+          supertest(app)
+              .post('/setTodo')
+              .send(persona)
+              .expect(200)
+              .expect('Content-Type', /json/)
+              .expect(function (res) {
+                  //console.log( "Server-spec , /setTodo res.body", res.body ); // Para comprobar qué contiene exactamente res.body
+                  assert(res.body.data.hasOwnProperty('email'));
+                  assert(res.body.data.email === CORREO_TEST);
+              })
+              .end((error) => { error ? done.fail(error) : done(); }
+              );
+      });
 
   })
 });

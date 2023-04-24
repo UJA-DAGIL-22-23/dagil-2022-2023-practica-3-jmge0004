@@ -362,16 +362,6 @@ Plantilla.listar2 = function () {
 /// Objeto para almacenar los datos de la persona que se está mostrando
 Plantilla.personaMostrada = null
 
-/**
- * Imprime los datos de una persona como una tabla usando la plantilla del formulario.
- * @param {persona} Plantilla Objeto con los datos de la persona
- * @returns Una cadena con la tabla que tiene ya los datos actualizados
- */
-Plantilla.personaComoTabla = function (persona) {
-    return Plantilla.plantillaTablaPersonas.cabecera
-        + Plantilla.plantillaTablaPersonas.actualiza(persona)
-        + Plantilla.plantillaTablaPersonas.pie;
-}
 
 /**
  * Función para mostrar en pantalla los detalles de una persona que se ha recuperado de la BBDD por su id
@@ -380,7 +370,6 @@ Plantilla.personaComoTabla = function (persona) {
 
 Plantilla.imprimeUnaPersona = function (persona) {
 
-   // let msj = Plantilla.personaComoTabla(persona);
     // let msj = Plantilla.plantillaTablaPersonas.cabecera
     // msj += Plantilla.plantillaTablaPersonas.actualiza2(persona)
     // msj += Plantilla.plantillaTablaPersonas.pie
@@ -522,7 +511,10 @@ Plantilla.habilitarCamposEditables = function () {
 Plantilla.habilitarDeshabilitarCamposEditables = function (deshabilitando) {
     deshabilitando = (typeof deshabilitando === "undefined" || deshabilitando === null) ? true : deshabilitando
     for (let campo in Plantilla.form) {
-        document.getElementById(Plantilla.form[campo]).disabled = deshabilitando
+        const elemento = document.getElementById(Plantilla.form[campo]);
+        if (elemento) {
+            elemento.disabled = deshabilitando;
+        }
     }
     return this
 }
