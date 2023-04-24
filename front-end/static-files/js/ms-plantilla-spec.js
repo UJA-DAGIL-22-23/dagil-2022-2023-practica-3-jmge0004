@@ -162,6 +162,7 @@ describe("Plantilla.plantillaTags: ", function () {
 describe("Plantilla.plantillaTablaPersonas.cabecera", function () {
     it("Comprobación para ver si se tiene la propiedad cabecera de plantillaTablaPersonas configurada correctamente", function () {
         var cabeceraEsperada = `<table id="tabla-personas" width="100%" class="listado-personas">
+<div><a href="javascript:Plantilla.listar2('undefined')" class="opcion-secundaria mostrar">Editar todo</a></div>
                     <thead>
                         <th width="10%">ID</th>
                         <th width="10%">Nombre</th>

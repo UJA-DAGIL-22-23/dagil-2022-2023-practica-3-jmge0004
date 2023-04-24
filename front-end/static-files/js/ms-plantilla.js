@@ -93,6 +93,7 @@ Plantilla.mostrarAcercaDe = function (datosDescargados) {
 }
 
 
+
 Plantilla.form = {
     NOMBRE: "form-persona-nombre",
     EDAD: "form-persona-edad",
@@ -127,6 +128,7 @@ Plantilla.plantillaTags = {
 }
 //Cabecera
 Plantilla.plantillaTablaPersonas.cabecera = `<table id="tabla-personas" width="100%" class="listado-personas">
+<div><a href="javascript:Plantilla.listar2('${Plantilla.listar2}')" class="opcion-secundaria mostrar">Editar todo</a></div>
                     <thead>
                         <th width="10%">ID</th>
                         <th width="10%">Nombre</th>
@@ -328,21 +330,34 @@ Plantilla.recupera = async function (callBackFn) {
  */
 
 Plantilla.imprimeMuchasPersonas = function (vector) {
- 
+
     // Compongo el contenido que se va a mostrar dentro de la tabla
     let msj = Plantilla.plantillaTablaPersonas.cabecera
     vector.forEach(e => msj += Plantilla.plantillaTablaPersonas.actualiza(e))
     msj += Plantilla.plantillaTablaPersonas.pie
     // Borro toda la info de Article y la sustituyo por la que me interesa
     Frontend.Article.actualizar("Listado de personas", msj)
+
 }
 
+Plantilla.imprimeMuchasPersonas2 = function (vector) {
+
+    // Compongo el contenido que se va a mostrar dentro de la tabla
+    let msj = '';
+    vector.forEach(e => msj += Plantilla.personaComoFormulario(e))
+  
+    // Borro toda la info de Article y la sustituyo por la que me interesa
+    Frontend.Article.actualizar("Listado de personas editables", msj)
+
+}
 
 Plantilla.listar = function () {
     Plantilla.recupera(Plantilla.imprimeMuchasPersonas);
 }
 
-
+Plantilla.listar2 = function () {
+    Plantilla.recupera(Plantilla.imprimeMuchasPersonas2);
+}
 
 /// Objeto para almacenar los datos de la persona que se está mostrando
 Plantilla.personaMostrada = null
@@ -382,6 +397,9 @@ Plantilla.almacenaDatos = function (persona) {
     Plantilla.personaMostrada = persona;
 }
 
+Plantilla.recuperaDatosAlmacenados = function () {
+    return this.personaMostrada;
+}
 
 
 Plantilla.recuperaUnaPersona = async function (idPersona, callBackFn) {
@@ -403,7 +421,9 @@ Plantilla.mostrar = function (idPersona) {
     this.recuperaUnaPersona(idPersona, this.imprimeUnaPersona);
 }
 
-
+Plantilla.mostrar2 = function (idPersona) {
+    this.recupera(idPersona, this.imprimeMuchasPersonas2);
+}
 
 
 /**
@@ -425,7 +445,7 @@ Plantilla.plantillaFormularioPersona.formulario = `
 <form method='post' action=''>
     <table width="100%" class="listado-personas">
         <thead>
-            <th width="10%">Id</th><th width="20%">Nombre</th><th width="20%">Edad</th><th width="10%">Dorsal</th><th width="10%">Posicion</th><th width="10%">Nacionalidad</th><th width="10%">Altura</th><th width="10%">Peso</th><th width="10%">Apodo</th>
+            <th width="10%">Id</th><th width="20%">Nombre</th><th width="20%">Edad</th><th width="20%">Fecha No Modificable</th><th width="10%">Dorsal</th><th width="10%">Posicion</th><th width="10%">Nacionalidad</th><th width="10%">Altura</th><th width="10%">Peso</th><th width="10%">Apodo</th>
         </thead>
         <tbody>
             <tr title="${Plantilla.plantillaTags.ID}">
@@ -438,7 +458,9 @@ Plantilla.plantillaFormularioPersona.formulario = `
                 <td><input type="number" class="form-persona-elemento editable" disabled
                         id="form-persona-edad" value="${Plantilla.plantillaTags.EDAD}"
                         name="edad_persona"/></td>
-              
+                 <td><input type="date" class="form-persona-elemento editable" disabled
+                        id="form-persona-fecha" required value="${Plantilla.plantillaTags.FECHA_NACIMIENTO}"
+                        name="fecha_persona" hidden/></td>
                  <td><input type="number" class="form-persona-elemento editable" disabled
                         id="form-persona-dorsal" required value="${Plantilla.plantillaTags.DORSAL}"
                         name="dorsal_persona"/></td>
@@ -581,3 +603,6 @@ Plantilla.guardar = async function () {
         //console.error(error)
     }
 }
+
+
+
