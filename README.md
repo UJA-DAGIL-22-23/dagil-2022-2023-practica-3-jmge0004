@@ -330,7 +330,78 @@ Se añade funciones de comparacion con el identificador de la tabla y finalmente
 <img src='/images/H5OrdenaEq.JPG' width='600px'>
 <img src='/images/H5Nombre.JPG' width='800px'>
 
+### Iteración 2
 
+Para la iteración 2 se eligen las siguientes historias de usuario:
+* HU 06: Ver todos los datos de un determinado jugador/equipo.
+* HU 12: Modificar el nombre de un jugador/equipo.
+* HU 13: Modificar varios de los datos a la vez de un jugador/equipo. Se deberán poder modificar al menos 3 campos además del nombre.
+* HU 14: Modificar el nombre de varios jugadores/equipos simultáneamente
+* HU 15: Modificar varios campos de varios jugadores/equipos a la vez
+<img src='/images/Iteracion2Prac3.JPG' width='1200px'>
+<img src='/images/Iteracion2Prac3Final.JPG' width='1200px'>
+
+#### Historia 6
+Para sacar solamente una persona por pantalla, se utilizan las funciones imprimeUnaPersona y recuperaUnaPersona. Recupera coge un id pasado de la persona y ese id es buscado y recuperado toda la información. Finalmente se muestra como una tabla solo de una persona.
+
+<img src='/images/H6Cuerpo.JPG' width='600px'>
+<img src='/images/H6GetPorId.JPG' width='600px'>
+<img src='/images/H6Imprime1Per.JPG' width='600px'>
+<img src='/images/H6Recupera1Per.JPG' width='600px'>
+<img src='/images/H6Resultado.JPG' width='800px'>
+
+#### Historia 12
+Para convertir el mostrar una persona, en algo editable, se ha hecho mediante formularios. Se ha creado el cuerpo del formulario para poder modificar el nombre y otros campos exceptuando el id por razones obvias y la fecha por elección del autor. Una vez creado la cabecera y cuerpo, se han añadido funciones de actualización, guardado, cancelar y editar. Para que esto sea posible se ha hecho en callbacks un setTodo para poder modificar los campos.
+
+<img src='/images/H12_13CuerpoFormulario.JPG' width='600px'>
+<img src='/images/H12_13CuerpoFormulario2.JPG' width='600px'>
+<img src='/images/H12_13Formulario.JPG' width='600px'>
+<img src='/images/H12_13FormularioActualiza.JPG' width='600px'>
+<img src='/images/H12_13Guardar.JPG' width='600px'>
+<img src='/images/H12_13Imprimeunapersona.JPG' width='600px'>
+<img src='/images/H12_13OpcionesFormulario.JPG' width='600px'>
+<img src='/images/H12_13OpcionesFormulario2.JPG' width='600px'>
+<img src='/images/H12_13SetTodo.JPG' width='600px'>
+<img src='/images/H12_13SetTodo2.JPG' width='600px'>
+<img src='/images/H12Resultado.JPG' width='800px'>
+
+#### Historia 13
+Poco que añadir, en vez de que solo se pueda modificar un campo, ahora se modifican todos los comentados anteriormente.
+
+<img src='/images/H12_13CuerpoFormulario.JPG' width='600px'>
+<img src='/images/H12_13CuerpoFormulario2.JPG' width='600px'>
+<img src='/images/H12_13Formulario.JPG' width='600px'>
+<img src='/images/H12_13FormularioActualiza.JPG' width='600px'>
+<img src='/images/H12_13Guardar.JPG' width='600px'>
+<img src='/images/H12_13Imprimeunapersona.JPG' width='600px'>
+<img src='/images/H12_13OpcionesFormulario.JPG' width='600px'>
+<img src='/images/H12_13OpcionesFormulario2.JPG' width='600px'>
+<img src='/images/H12_13SetTodo.JPG' width='600px'>
+<img src='/images/H12_13SetTodo2.JPG' width='600px'>
+<img src='/images/H13Resultado.JPG' width='800px'>
+
+#### Historia 14
+Para hacer la modificación de varios jugadores en la misma pantalla se ha incluido una url que llama a listar modificado, que hace que sea posible editar varios jugadores.
+
+Para la siguiente historia, el cambio es mínimo dado que son varios campos a la vez para cambiar.
+
+<img src='/images/H14_15Cabecera.JPG' width='600px'>
+<img src='/images/H14_15ImprimeMuchas.JPG' width='600px'>
+<img src='/images/H14_15Listar.JPG' width='600px'>
+<img src='/images/H14_15Mostrar.JPG' width='600px'>
+<img src='/images/H14_15Resultado.JPG' width='800px'>
+
+#### Historia 15
+
+<img src='/images/H14_15Cabecera.JPG' width='600px'>
+<img src='/images/H14_15ImprimeMuchas.JPG' width='600px'>
+<img src='/images/H14_15Listar.JPG' width='600px'>
+<img src='/images/H14_15Mostrar.JPG' width='600px'>
+<img src='/images/H14_15Resultado2.JPG' width='800px'>
+
+
+
+# Explicacion funcional de la practica
 ## Arquitectura de la aplicación
 
 La aplicación funciona gracias a la colaboración de **tres aplicaciones distintas** (en realidad, tres servidores web implementados con [Express ↗️](https://expressjs.com/) para [Node.js ↗️](https://nodejs.org/en/)).
